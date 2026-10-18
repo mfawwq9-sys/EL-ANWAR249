@@ -1645,12 +1645,17 @@
             renderInvoices();
             updateDashboard();
         }
+        
+    </script>
+<script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load' () => {
                    navigator.serviceWorker.register('./sw.js')
-                .then((reg) => console.log('service Woeker registered!' ,reg));
+                .then((reg) => console.log('service Woeker registered successfully!' ,reg))
+            .catch((err) => console.log('service Worker registration failed:',err));
+            
             });
         }
-    </script>
+            </script>
 </body>
 </html>
