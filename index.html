@@ -762,9 +762,15 @@
                         <div class="form-grid">
                             <div class="input-group"><label>اسم الطالب الكامل</label><input type="text" id="stdName" placeholder="الاسم الكامل"></div>
                             <div class="input-group"><label>رقم الهاتف</label><input type="text" id="stdPhone" placeholder="09xxxxxxxx"></div>
-            
+                            <div class="input-group">
+                                <label>مستوى كورس الإنجليزية</label>
+                                <select id="stdLevel">
+                                    <option value="Beginner (مبتدئ)">مبتدئ (Beginner)</option>
+                                    <option value="Intermediate (متوسط)">متوسط (Intermediate)</option>
+                                    <option value="Advanced (متقدم)">متقدم (Advanced)</option>
+                                </select>
+                            </div>
                             <button onclick="addStudent()" class="btn">حفظ الطالب</button>
-                            
                         </div>
                     </div>
                     <div class="card">
@@ -776,7 +782,7 @@
                                         <th>#</th>
                                         <th>اسم الطالب</th>
                                         <th>الهاتف</th>
-                                        <th>البريد الإلكتروني</th>
+                                        <th>مستوى الإنجليزي</th>
                                         <th>تاريخ التسجيل</th>
                                         <th style="text-align: center;">الإجراءات</th>
                                     </tr>
@@ -816,14 +822,14 @@
                     </div>
                 </div>
 
-                <!-- 7. المدربين -->
+                <!-- 7. إدارة المدربين والأكاديميين -->
                 <div id="trainersPage" class="page-section">
                     <div class="card">
-                        <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 15px;">إضافة مدرب جديد</h3>
+                        <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 15px;">تسجيل مدرب جديد</h3>
                         <div class="form-grid">
-                            <div class="input-group"><label>اسم المدرب</label><input type="text" id="trnName" placeholder="د. أحمد..."></div>
-                            <div class="input-group"><label>التخصص</label><input type="text" id="trnSpecialty" placeholder="لغات وتطوير"></div>
-                            <div class="input-group"><label>رقم الهاتف</label><input type="text" id="trnPhone" placeholder="09xxxxxxxx"></div>
+                            <div class="input-group"><label>اسم المدرب</label><input type="text" id="trnName" placeholder="الاسم الكامل"></div>
+                            <div class="input-group"><label>التخصص</label><input type="text" id="trnSpec" placeholder="لغة إنجليزية / حاسوب"></div>
+                            <div class="input-group"><label>الهاتف</label><input type="text" id="trnPhone" placeholder="09xxxxxxxx"></div>
                             <button onclick="addTrainer()" class="btn">حفظ المدرب</button>
                         </div>
                     </div>
@@ -835,7 +841,7 @@
                                         <th>#</th>
                                         <th>اسم المدرب</th>
                                         <th>التخصص</th>
-                                        <th>رقم الهاتف</th>
+                                        <th>الهاتف</th>
                                         <th style="text-align: center;">الإجراءات</th>
                                     </tr>
                                 </thead>
@@ -850,42 +856,53 @@
                     <div class="card">
                         <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 15px;">تسجيل طالب في كورس</h3>
                         <div class="form-grid">
-                            <div class="input-group"><label>اختر الطالب</label><select id="admStudentSelect"></select></div>
-                            <div class="input-group"><label>اختر الكورس</label><select id="admCourseSelect"></select></div>
-                            <button onclick="registerStudentToCourse()" class="btn btn-success">تأكيد التسجيل</button>
+                            <div class="input-group">
+                                <label>اختر الطالب</label>
+                                <select id="admStudentSelect"><option value="">اختر الطالب...</option></select>
+                            </div>
+                            <div class="input-group">
+                                <label>اختر الكورس</label>
+                                <select id="admCourseSelect"><option value="">اختر الكورس...</option></select>
+                            </div>
+                            <div class="input-group"><label>المبلغ المدفوع</label><input type="number" id="admPaidAmount" placeholder="0.00"></div>
+                            <button onclick="addAdmission()" class="btn btn-success">إتمام التسجيل</button>
                         </div>
                     </div>
                     <div class="card">
+                        <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 10px;">سجل القبول والتسجيل</h3>
                         <div class="table-container">
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>اسم الطالب</th>
-                                        <th>الكورس المسجل</th>
-                                        <th>تاريخ التسجيل</th>
+                                        <th>التاريخ</th>
+                                        <th>الطالب</th>
+                                        <th>الكورس</th>
+                                        <th>رسوم الكورس</th>
+                                        <th>المدفوع</th>
+                                        <th>المتبقي</th>
                                         <th style="text-align: center;">الإجراءات</th>
                                     </tr>
                                 </thead>
-                                <tbody id="admissionTableBody"></tbody>
+                                <tbody id="admissionsTableBody"></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
 
-                <!-- 9. الحسابات والمدفوعات -->
+                <!-- 9. الحسابات والأقساط -->
                 <div id="accountsPage" class="page-section">
                     <div class="card">
-                        <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 10px;">متابعة حسابات الطلاب والأقساط</h3>
+                        <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 10px;">متابعة أقساط الطلاب والمتبقيات</h3>
                         <div class="table-container">
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>اسم الطالب</th>
+                                        <th>الطالب</th>
                                         <th>الكورس</th>
-                                        <th>رسوم الكورس</th>
-                                        <th>المسدد</th>
+                                        <th>المبلغ الكلي</th>
+                                        <th>المدفوع</th>
                                         <th>المتبقي</th>
-                                        <th style="text-align: center;">تسجيل دفعة</th>
+                                        <th style="text-align: center;">تسديد قسط</th>
                                     </tr>
                                 </thead>
                                 <tbody id="accountsTableBody"></tbody>
@@ -897,19 +914,25 @@
                 <!-- 10. الحضور والغياب -->
                 <div id="attendancePage" class="page-section">
                     <div class="card">
-                        <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 15px;">تسجيل حضور وغياب</h3>
+                        <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 15px;">تسجيل حضور طالب</h3>
                         <div class="form-grid">
-                            <div class="input-group"><label>الطالب</label><select id="attStudentSelect"></select></div>
-                            <div class="input-group"><label>اختر الكورس</label><select id="attCourseSelect"></select></div>
+                            <div class="input-group">
+                                <label>اختر الطالب</label>
+                                <select id="attStudentSelect"><option value="">اختر الطالب...</option></select>
+                            </div>
+                            <div class="input-group">
+                                <label>اختر الكورس</label>
+                                <select id="attCourseSelect"><option value="">اختر الكورس...</option></select>
+                            </div>
                             <div class="input-group">
                                 <label>الحالة</label>
                                 <select id="attStatus">
                                     <option value="حاضر">حاضر</option>
                                     <option value="غائب">غائب</option>
-                                    <option value="متأخر">متأخر</option>
+                                    <option value="مستأذن">مستأذن</option>
                                 </select>
                             </div>
-                            <button onclick="addAttendance()" class="btn">حفظ السجل</button>
+                            <button onclick="addAttendance()" class="btn">تسجيل الحضور</button>
                         </div>
                     </div>
                     <div class="card">
@@ -930,52 +953,38 @@
                     </div>
                 </div>
 
-                <!-- 11. الشهادات -->
+                <!-- 11. الشهادات المعتمدة -->
                 <div id="certificatesPage" class="page-section">
                     <div class="card">
-                        <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 15px;">توليد شهادة إتمام دورة</h3>
+                        <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 15px;">إصدار شهادة جديدة</h3>
                         <div class="form-grid">
-                            <div class="input-group"><label>الطالب</label><select id="certStudentSelect"></select></div>
-                            <div class="input-group"><label>الكورس</label><select id="certCourseSelect"></select></div>
-                            <button onclick="generateCertificate()" class="btn btn-success">معاينة الشهادة</button>
+                            <div class="input-group">
+                                <label>اختر الطالب</label>
+                                <select id="certStudentSelect"><option value="">اختر الطالب...</option></select>
+                            </div>
+                            <div class="input-group">
+                                <label>اختر الكورس</label>
+                                <select id="certCourseSelect"><option value="">اختر الكورس...</option></select>
+                            </div>
+                            <div class="input-group"><label>التقدير / التقييم</label><input type="text" id="certGrade" placeholder="ممتاز / A+"></div>
+                            <button onclick="addCertificate()" class="btn btn-success">إصدار الشهادة</button>
                         </div>
                     </div>
-
-                    <div id="certificateContainer" style="display: none; margin-top: 30px;">
-                        <div class="certificate-box" id="printableCert">
-                            <h4 style="font-size: 20px; font-family: serif; color: #1e3a8a; font-weight: bold;">AL-ANWAR TRAINING & LANGUAGES INSTITUTE</h4>
-                            <p style="font-size: 15px; font-family: serif; color: #1e3a8a; margin-bottom: 20px;">Certificate of Completion</p>
-                            <h2 style="font-size: 34px; font-family: serif; font-weight: 900; color: #1e3a8a; text-transform: uppercase; margin-bottom: 10px;">شهادة تقدير وإتمام دورة</h2>
-                            <div style="background: #2563eb; color: #fff; display: inline-block; padding: 4px 25px; border-radius: 4px; font-size: 13px; font-weight: bold; margin-bottom: 20px;">معتمدة رسمياً</div>
-                            <p style="font-style: italic; color: #475569; font-size: 14px; margin-bottom: 15px;">يشهد معهد الأنوار بأن المتدرب / المتدربة:</p>
-                            <div style="border: 2px solid #2563eb; background: #eff6ff; padding: 12px; border-radius: 8px; max-width: 600px; margin: 0 auto 20px auto;">
-                                <span id="certStudentNameDisplay" style="font-size: 20px; font-weight: 900; color: #1e3a8a;">اسم الطالب هنا</span>
-                            </div>
-                            <p style="font-size: 13px; color: #64748b; margin-bottom: 20px; line-height: 1.6;">قد أتم بنجاح وبتقدير ممتاز متطلبات وساعات البرنامج التدريبي في كورس:</p>
-                            <div style="border: 1px solid #cbd5e1; background: #ffffff; padding: 12px; border-radius: 8px; max-width: 600px; margin: 0 auto 30px auto;">
-                                <span id="certCourseNameDisplay" style="font-size: 18px; font-weight: 800; color: #1d4ed8;">اسم الكورس هنا</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-around; font-size: 13px; color: #334155; font-weight: 600; margin-bottom: 35px;">
-                                <div>تاريخ الإصدار: <span id="certDateDisplay" style="border-bottom: 1px dotted #94a3b8; padding-bottom: 2px;"></span></div>
-                                <div>رقم الاعتماد: <span id="certCodeDisplay" style="border-bottom: 1px dotted #94a3b8; padding-bottom: 2px;"></span></div>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid #e2e8f0; padding-top: 20px;">
-                                <div style="text-align: center; width: 180px;">
-                                    <div style="border-top: 1.5px solid #1e293b; margin-bottom: 6px;"></div>
-                                    <span style="font-size: 13px; font-weight: bold;">إدارة التدريب</span>
-                                </div>
-                                <div style="width: 75px; height: 75px; background: radial-gradient(circle, #1e3a8a 0%, #0f172a 100%); border: 2px solid #2563eb; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #60a5fa; font-size: 9px; font-weight: bold;">
-                                    <span>ختم المعهد</span>
-                                    <span>OFFICIAL</span>
-                                </div>
-                                <div style="text-align: center; width: 180px;">
-                                    <div style="border-top: 1.5px solid #1e293b; margin-bottom: 6px;"></div>
-                                    <span style="font-size: 13px; font-weight: bold;">المدير العام</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="text-align: center; margin-top: 20px;">
-                            <button onclick="printCertificatePDF()" class="btn btn-success">📥 تصدير الشهادة PDF / طباعة</button>
+                    <div class="card">
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>رقم الشهادة</th>
+                                        <th>التاريخ</th>
+                                        <th>الطالب</th>
+                                        <th>الكورس</th>
+                                        <th>التقدير</th>
+                                        <th style="text-align: center;">عرض وطباعة</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="certificatesTableBody"></tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -983,9 +992,15 @@
                 <!-- 12. التقارير الشاملة -->
                 <div id="reportsPage" class="page-section">
                     <div class="card">
-                        <h3 style="font-size: 15px; font-weight: 900; margin-bottom: 15px;">التقرير المالي والإحصائي الشامل</h3>
-                        <p id="reportSummaryText" style="line-height: 1.8; font-size: 14px; margin-bottom: 25px;"></p>
-                        <button onclick="window.print()" class="btn btn-secondary">طباعة التقرير الشامل</button>
+                        <h3 style="font-size: 15px; font-weight: 900; margin-bottom: 15px;">التقرير المالي والتنفيذي الشامل</h3>
+                        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                            <button onclick="generateReport('daily')" class="btn btn-secondary">تقرير اليوم</button>
+                            <button onclick="generateReport('monthly')" class="btn btn-secondary">تقرير الشهر</button>
+                            <button onclick="generateReport('all')" class="btn">التقرير الكلي</button>
+                        </div>
+                        <div id="reportResultContainer" style="padding: 20px; border: 1px dashed var(--border); border-radius: 14px; background: var(--bg-app);">
+                            <p style="text-align: center; color: var(--text-muted); font-size: 13px;">اختر نوع التقرير لعرض الملخص والبيانات...</p>
+                        </div>
                     </div>
                 </div>
 
@@ -993,532 +1008,630 @@
         </div>
     </div>
 
-    <!-- نافذة منبثقة للفاتورة -->
-    <div class="modal-overlay" id="invoiceModal">
-        <div class="modal-box" id="invoicePrintArea">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #2563eb; padding-bottom: 15px; margin-bottom: 20px;">
-                <div>
-                    <h3 style="font-size: 18px; font-weight: 900;">معهد الأنوار للتدريب واللغات</h3>
-                    <p style="font-size: 11px; color: #64748b;">هاتف: 0900000000 - السودان / أمدرمان</p>
-                </div>
-                <div style="text-align: left;">
-                    <h4 style="font-size: 14px; font-weight: 800;">سند قبض رسمي</h4>
-                    <span id="modalInvNo" style="font-size: 12px; font-weight: bold; color: #2563eb;"></span>
-                </div>
-            </div>
-            <div style="font-size: 13px; margin-bottom: 20px;">
-                <p style="margin-bottom: 6px;"><strong>اسم العميل / الطالب:</strong> <span id="modalClientName"></span></p>
-                <p style="margin-bottom: 15px;"><strong>تاريخ الإصدار:</strong> <span id="modalDate"></span></p>
-                <table style="width: 100%; border: 1px solid #cbd5e1; margin-bottom: 15px;">
-                    <thead>
-                        <tr style="background: #f1f5f9;"><th style="padding: 10px; border: 1px solid #cbd5e1;">البيان والخدمة</th><th style="padding: 10px; border: 1px solid #cbd5e1;">المبلغ</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td style="padding: 10px; border: 1px solid #cbd5e1;" id="modalServiceDesc"></td><td style="padding: 10px; border: 1px solid #cbd5e1;" id="modalServiceAmount"></td></tr>
-                    </tbody>
-                </table>
-                <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 15px; margin-top: 15px;">
-                    <span>المجموع الكلي:</span>
-                    <span id="modalTotal" style="color: #2563eb;"></span>
-                </div>
-            </div>
-            <div style="display: flex; justify-content: space-between; margin-top: 35px; border-top: 1px solid #e2e8f0; padding-top: 20px; font-size: 12px; text-align: center;">
-                <div>توقيع المستلم<br><br>........................</div>
-                <div>ختم المعهد<br><br>........................</div>
-            </div>
-        </div>
-        <div style="position: fixed; bottom: 25px; display: flex; gap: 12px;">
-            <button onclick="downloadInvoicePDF()" class="btn btn-success">تحميل الفاتورة PDF</button>
-            <button onclick="closeInvoiceModal()" class="btn btn-danger">إغلاق</button>
-        </div>
+    <!-- النافذة المنبثقة للفواتير والشهادات -->
+    <div id="previewModal" class="modal-overlay">
+        <div class="modal-box" id="modalBoxContent"></div>
     </div>
-
-    <!-- نافذة إدخال مخصصة بدلاً من prompt -->
-    <div class="modal-overlay" id="customPromptModal">
-        <div class="custom-prompt-modal">
-            <h3 id="promptTitle" style="font-size: 15px; font-weight: 800; margin-bottom: 10px;">إدخال بيانات</h3>
-            <p id="promptDesc" style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;"></p>
-            <input type="number" id="promptInput" style="margin-bottom: 15px;" placeholder="أدخل المبلغ...">
-            <div style="display: flex; gap: 10px;">
-                <button onclick="resolvePrompt(true)" class="btn btn-success" style="flex: 1; height: 38px;">تأكيد</button>
-                <button onclick="resolvePrompt(false)" class="btn btn-secondary" style="flex: 1; height: 38px;">إلغاء</button>
-            </div>
-        </div>
-    </div>
-
+<!-- أكواد البرمجة للجافاسكريبت -->
     <script>
-        // نظام الإشعارات المنبثقة (Toast System)
-        function showToast(message, type = 'success') {
+        // الهيكل الرئيسي لتخزين بيانات التطبيق في الذاكرة المحلية
+        const DEFAULT_DATA = {
+            students: [],
+            courses: [],
+            trainers: [],
+            income: [],
+            expenses: [],
+            invoices: [],
+            admissions: [],
+            attendance: [],
+            certificates: [],
+            currency: 'ج.س'
+        };
+
+        let appData = JSON.parse(localStorage.getItem('EL_ANWAR_DATA')) || DEFAULT_DATA;
+
+        function saveData() {
+            localStorage.setItem('EL_ANWAR_DATA', JSON.stringify(appData));
+        }
+
+        function showToast(msg, type = 'info') {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             toast.className = 'toast';
-            toast.innerHTML = `<span>${type === 'success' ? '✅' : '⚠️'}</span> ${message}`;
+            toast.innerText = msg;
             container.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
-
-        // نظام إدخال مخصص بدلاً من prompt
-        let promptResolve = null;
-        function customPrompt(title, desc) {
-            return new Promise((resolve) => {
-                document.getElementById('promptTitle').innerText = title;
-                document.getElementById('promptDesc').innerText = desc;
-                document.getElementById('promptInput').value = '';
-                document.getElementById('customPromptModal').style.display = 'flex';
-                document.getElementById('promptInput').focus();
-                promptResolve = resolve;
-            });
-        }
-        function resolvePrompt(confirmed) {
-            const val = document.getElementById('promptInput').value;
-            document.getElementById('customPromptModal').style.display = 'none';
-            if (promptResolve) promptResolve(confirmed ? val : null);
-        }
-
-        // إدارة الثيم العصري بضغطة زر تنقلية (نهاري -> ليلي -> برتقالي)
-        const themes = [
-            { key: 'light', label: 'المظهر: نهاري', icon: '☀️' },
-            { key: 'dark', label: 'المظهر: ليلي', icon: '🌙' },
-            { key: 'orange', label: 'المظهر: برتقالي', icon: '🟧' }
-        ];
-        let currentThemeIndex = 0;
-
-        function applyTheme(index) {
-            currentThemeIndex = index;
-            const theme = themes[currentThemeIndex];
-            document.documentElement.setAttribute('data-theme', theme.key);
-            document.getElementById('themeIcon').innerText = theme.icon;
-            document.getElementById('themeLabel').innerText = theme.label;
-            localStorage.setItem('anwar_theme', theme.key);
-        }
-
-        function toggleTheme() {
-            let nextIndex = (currentThemeIndex + 1) % themes.length;
-            applyTheme(nextIndex);
-            showToast(`تم تغيير ${themes[nextIndex].label}`);
-        }
-
-        // تحميل الثيم عند بداية التشغيل
-        (function initTheme() {
-            const savedThemeKey = localStorage.getItem('anwar_theme') || 'light';
-            const foundIndex = themes.findIndex(t => t.key === savedThemeKey);
-            applyTheme(foundIndex !== -1 ? foundIndex : 0);
-        })();
-
-        // الحالة العامة للبيانات
-        let appData = {
-            currency: 'ج.س',
-            students: JSON.parse(localStorage.getItem('anwar_students')) || [],
-            courses: JSON.parse(localStorage.getItem('anwar_courses')) || [],
-            trainers: JSON.parse(localStorage.getItem('anwar_trainers')) || [],
-            invoices: JSON.parse(localStorage.getItem('anwar_invoices')) || [],
-            income: JSON.parse(localStorage.getItem('anwar_income')) || [],
-            expenses: JSON.parse(localStorage.getItem('anwar_expenses')) || [],
-            admissions: JSON.parse(localStorage.getItem('anwar_admissions')) || [],
-            attendance: JSON.parse(localStorage.getItem('anwar_attendance')) || []
-        };
-
-        // الحفظ الفوري المباشر مع تحديث الواجهة
-        function saveData() {
-            localStorage.setItem('anwar_students', JSON.stringify(appData.students));
-            localStorage.setItem('anwar_courses', JSON.stringify(appData.courses));
-            localStorage.setItem('anwar_trainers', JSON.stringify(appData.trainers));
-            localStorage.setItem('anwar_invoices', JSON.stringify(appData.invoices));
-            localStorage.setItem('anwar_income', JSON.stringify(appData.income));
-            localStorage.setItem('anwar_expenses', JSON.stringify(appData.expenses));
-            localStorage.setItem('anwar_admissions', JSON.stringify(appData.admissions));
-            localStorage.setItem('anwar_attendance', JSON.stringify(appData.attendance));
-            updateDashboard();
+            setTimeout(() => { toast.remove(); }, 3000);
         }
 
         function handleLogin() {
             const user = document.getElementById('loginUser').value.trim();
-            const pass = document.getElementById('loginPass').value;
-            const currency = document.getElementById('selectedCurrency').value;
-            
-            if(!user || !pass) {
-                return showToast('يرجى إدخال اسم المستخدم وكلمة المرور', 'error');
-            }
+            const pass = document.getElementById('loginPass').value.trim();
+            appData.currency = document.getElementById('selectedCurrency').value;
 
-            appData.currency = currency;
-            document.getElementById('loginOverlay').style.display = 'none';
-            document.getElementById('mainAppContainer').style.display = 'flex';
-            
-            // تفريغ حقل كلمة المرور فور الدخول لإخفائها تماماً
-            document.getElementById('loginPass').value = '';
-            
-            updateDashboard();
-            renderAllTables();
-            showToast('مرحباً بك في لوحة التحكم الإدارية');
+            if (user === 'admin' && pass === '1234') {
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('mainAppContainer').style.display = 'flex';
+                saveData();
+                renderAllTables();
+                updateSelects();
+                updateDashboard();
+                showToast('تم تسجيل الدخول بنجاح!', 'success');
+            } else {
+                alert('اسم المستخدم أو كلمة المرور غير صحيحة!');
+            }
         }
 
         function logout() {
-            document.getElementById('loginOverlay').style.display = 'flex';
             document.getElementById('mainAppContainer').style.display = 'none';
-            document.getElementById('loginPass').value = '';
-            showToast('تم تسجيل الخروج بنجاح');
+            document.getElementById('loginOverlay').style.display = 'flex';
         }
 
-        function switchPage(pageId, btn) {
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            let nextTheme = 'light';
+            let icon = '☀️';
+            let label = 'المظهر: نهاري';
+
+            if (currentTheme === 'light') {
+                nextTheme = 'dark'; icon = '🌙'; label = 'المظهر: ليلي';
+            } else if (currentTheme === 'dark') {
+                nextTheme = 'orange'; icon = '🍊'; label = 'المظهر: برتقالي';
+            }
+
+            document.documentElement.setAttribute('data-theme', nextTheme);
+            document.getElementById('themeIcon').innerText = icon;
+            document.getElementById('themeLabel').innerText = label;
+        }
+
+        function switchPage(pageId, btnEl) {
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+
             document.getElementById(pageId).classList.add('active');
-            btn.classList.add('active');
-            document.getElementById('pageTitleHeading').innerText = btn.innerText.trim();
-            renderAllTables();
+            if (btnEl) btnEl.classList.add('active');
+
+            const pageTitles = {
+                dashboardPage: 'لوحة التحكم',
+                invoicesPage: 'الفواتير الرسمية',
+                incomePage: 'سجل الإيرادات (الوارد)',
+                expensesPage: 'سجل المصروفات (المنصرف)',
+                studentsPage: 'إدارة الطلاب',
+                coursesPage: 'الدورات والكورسات',
+                trainersPage: 'المدربين والأكاديميين',
+                admissionPage: 'التسجيل والقبول',
+                accountsPage: 'الحسابات والأقساط',
+                attendancePage: 'الحضور والغياب',
+                certificatesPage: 'الشهادات المعتمدة',
+                reportsPage: 'التقارير الشاملة'
+            };
+            document.getElementById('pageTitleHeading').innerText = pageTitles[pageId] || 'النظام الإداري';
         }
 
-        function updateDashboard() {
-            const totalStudents = appData.students.length;
-            const totalIncome = appData.income.reduce((sum, item) => sum + Number(item.amount), 0);
-            const totalExpense = appData.expenses.reduce((sum, item) => sum + Number(item.amount), 0);
-            const balance = totalIncome - totalExpense;
-
-            document.getElementById('dashTotalStudents').innerText = totalStudents;
-            document.getElementById('dashTotalIncome').innerText = totalIncome.toFixed(2) + ' ' + appData.currency;
-            document.getElementById('dashTotalExpense').innerText = totalExpense.toFixed(2) + ' ' + appData.currency;
-            document.getElementById('dashBalance').innerText = balance.toFixed(2) + ' ' + appData.currency;
-
-            document.getElementById('reportSummaryText').innerText = 
-                `يحتوي معهد الأنوار للتدريب واللغات حتى تاريخه على ${totalStudents} طالب/طالبة مسجلين، بإجمالي إيرادات بلغت ${totalIncome.toFixed(2)} ${appData.currency}، ومصروفات تشغيلية وإدارية بقيمة ${totalExpense.toFixed(2)} ${appData.currency}، ليكون صافي الخزنة الحالية ${balance.toFixed(2)} ${appData.currency}.`;
+        function generateStudentSerial() {
+            let count = (appData.students ? appData.students.length : 0) + 1;
+            let serialNumber = String(count).padStart(4, '0');
+            return `ANW-2026-${serialNumber}`;
         }
 
-        // إدارة الطلاب
+        // --- 1. الطلاب ---
         function addStudent() {
             const name = document.getElementById('stdName').value.trim();
             const phone = document.getElementById('stdPhone').value.trim();
-            const email = document.getElementById('stdEmail').value.trim();
-            if(!name) return showToast('يرجى إدخال اسم الطالب', 'error');
-            
-            appData.students.push({ id: Date.now(), name, phone, email, date: new Date().toLocaleDateString() });
-            document.getElementById('stdName').value = '';
-            document.getElementById('stdPhone').value = '';
-            document.getElementById('stdEmail').value = '';
-            
+            const level = document.getElementById('stdLevel').value;
+
+            if (!name) return alert('الرجاء إدخال اسم الطالب');
+
+            const newStd = {
+                id: Date.now().toString(),
+                serial: generateStudentSerial(),
+                name: name,
+                phone: phone,
+                level: level,
+                date: new Date().toLocaleDateString('ar-EG')
+            };
+
+            appData.students.push(newStd);
             saveData();
             renderStudents();
-            showToast('تم حفظ الطالب بنجاح ورُفعت البيانات فوراً');
+            updateSelects();
+            updateDashboard();
+
+            document.getElementById('stdName').value = '';
+            document.getElementById('stdPhone').value = '';
+            showToast('تم حفظ الطالب بنجاح! رقم القيد: ' + newStd.serial);
         }
 
         function renderStudents() {
             const tbody = document.getElementById('studentsTableBody');
+            const search = document.getElementById('studentSearch') ? document.getElementById('studentSearch').value.toLowerCase() : '';
             tbody.innerHTML = '';
-            const search = document.getElementById('studentSearch').value.toLowerCase();
-            const filtered = appData.students.filter(s => s.name.toLowerCase().includes(search));
-            
-            if(filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="empty-state">لا توجد بيانات طلاب متاحة حالياً</td></tr>`;
-                updateSelects();
+
+            const list = appData.students.filter(s => s.name.toLowerCase().includes(search) || s.serial.toLowerCase().includes(search));
+
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="empty-state">لا يوجد طلاب مسجلين</td></tr>`;
                 return;
             }
 
-            filtered.forEach((s, idx) => {
+            list.forEach(s => {
                 tbody.innerHTML += `
                     <tr>
-                        <td>${idx + 1}</td>
-                        <td style="font-weight: 800;">${s.name}</td>
+                        <td><strong>${s.serial}</strong></td>
+                        <td>${s.name}</td>
                         <td>${s.phone || '-'}</td>
-                        <td>${s.email || '-'}</td>
+                        <td>${s.level || 'مبتدئ'}</td>
                         <td>${s.date}</td>
-                        <td style="text-align: center;"><button onclick="deleteStudent(${s.id})" class="btn btn-danger" style="padding: 4px 10px; height: auto; font-size: 11px;">حذف</button></td>
+                        <td style="text-align: center;">
+                            <button onclick="generateCertificateImage('${s.name}', '${s.serial}', '${s.level}')" class="btn btn-success" style="height:28px; font-size:11px; padding:0 8px;">إصدار شهادة 🎓</button>
+                            <button onclick="deleteStudent('${s.id}')" class="btn btn-danger" style="height:28px; font-size:11px; padding:0 8px;">حذف</button>
+                        </td>
                     </tr>
                 `;
             });
-            updateSelects();
         }
 
         function deleteStudent(id) {
-            appData.students = appData.students.filter(s => s.id !== id);
-            saveData();
-            renderStudents();
-            showToast('تم حذف الطالب وتحديث البيانات فوراً');
+            if (confirm('هل أنت تأكد من حذف هذا الطالب؟')) {
+                appData.students = appData.students.filter(s => s.id !== id);
+                saveData();
+                renderStudents();
+                updateSelects();
+                updateDashboard();
+                showToast('تم حذف الطالب');
+            }
         }
 
-        // الكورسات
+        // --- 2. الكورسات ---
         function addCourse() {
             const name = document.getElementById('crsName').value.trim();
-            const fee = document.getElementById('crsFee').value;
+            const fee = parseFloat(document.getElementById('crsFee').value) || 0;
             const duration = document.getElementById('crsDuration').value.trim();
-            if(!name || !fee) return showToast('يرجى إدخال اسم الكورس والرسوم', 'error');
-            
-            appData.courses.push({ id: Date.now(), name, fee: Number(fee), duration });
+
+            if (!name) return alert('الرجاء إدخال اسم الكورس');
+
+            appData.courses.push({ id: Date.now().toString(), name, fee, duration });
+            saveData();
+            renderCourses();
+            updateSelects();
+
             document.getElementById('crsName').value = '';
             document.getElementById('crsFee').value = '';
             document.getElementById('crsDuration').value = '';
-            
-            saveData();
-            renderCourses();
-            showToast('تم إضافة الكورس وحفظه فوراً');
+            showToast('تم إدراج الكورس بنجاح');
         }
 
         function renderCourses() {
             const tbody = document.getElementById('coursesTableBody');
             tbody.innerHTML = '';
-            if(appData.courses.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="empty-state">لا توجد كورسات مضافة حالياً</td></tr>`;
-                updateSelects();
+            if (appData.courses.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="empty-state">لا توجد كورسات مضافة</td></tr>`;
                 return;
             }
             appData.courses.forEach((c, idx) => {
                 tbody.innerHTML += `
                     <tr>
                         <td>${idx + 1}</td>
-                        <td style="font-weight: 800;">${c.name}</td>
-                        <td>${c.fee} ${appData.currency}</td>
+                        <td>${c.name}</td>
+                        <td>${c.fee.toLocaleString()} ${appData.currency}</td>
                         <td>${c.duration}</td>
-                        <td style="text-align: center;"><button onclick="deleteCourse(${c.id})" class="btn btn-danger" style="padding: 4px 10px; height: auto; font-size: 11px;">حذف</button></td>
+                        <td style="text-align: center;">
+                            <button onclick="deleteCourse('${c.id}')" class="btn btn-danger" style="height:28px; font-size:11px; padding:0 8px;">حذف</button>
+                        </td>
                     </tr>
                 `;
             });
-            updateSelects();
         }
 
         function deleteCourse(id) {
-            appData.courses = appData.courses.filter(c => c.id !== id);
-            saveData();
-            renderCourses();
-            showToast('تم حذف الكورس وحفظ التغييرات فوراً');
+            if (confirm('حذف الكورس؟')) {
+                appData.courses = appData.courses.filter(c => c.id !== id);
+                saveData();
+                renderCourses();
+                updateSelects();
+            }
         }
 
-        // المدربين
+        // --- 3. المدربين ---
         function addTrainer() {
             const name = document.getElementById('trnName').value.trim();
-            const specialty = document.getElementById('trnSpecialty').value.trim();
+            const spec = document.getElementById('trnSpec').value.trim();
             const phone = document.getElementById('trnPhone').value.trim();
-            if(!name) return showToast('يرجى إدخال اسم المدرب', 'error');
-            
-            appData.trainers.push({ id: Date.now(), name, specialty, phone });
-            document.getElementById('trnName').value = '';
-            document.getElementById('trnSpecialty').value = '';
-            document.getElementById('trnPhone').value = '';
-            
+
+            if (!name) return alert('أدخل اسم المدرب');
+
+            appData.trainers.push({ id: Date.now().toString(), name, spec, phone });
             saveData();
             renderTrainers();
-            showToast('تم حفظ المدرب فوراً');
+
+            document.getElementById('trnName').value = '';
+            document.getElementById('trnSpec').value = '';
+            document.getElementById('trnPhone').value = '';
+            showToast('تم حفظ بيانات المدرب');
         }
 
         function renderTrainers() {
             const tbody = document.getElementById('trainersTableBody');
             tbody.innerHTML = '';
-            if(appData.trainers.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="empty-state">لا توجد مدربين مسجلين حالياً</td></tr>`;
+            if (appData.trainers.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="empty-state">لا يوجد مدربين مسجلين</td></tr>`;
                 return;
             }
             appData.trainers.forEach((t, idx) => {
                 tbody.innerHTML += `
                     <tr>
                         <td>${idx + 1}</td>
-                        <td style="font-weight: 800;">${t.name}</td>
-                        <td>${t.specialty || '-'}</td>
-                        <td>${t.phone || '-'}</td>
-                        <td style="text-align: center;"><button onclick="deleteTrainer(${t.id})" class="btn btn-danger" style="padding: 4px 10px; height: auto; font-size: 11px;">حذف</button></td>
+                        <td>${t.name}</td>
+                        <td>${t.spec}</td>
+                        <td>${t.phone}</td>
+                        <td style="text-align: center;">
+                            <button onclick="deleteTrainer('${t.id}')" class="btn btn-danger" style="height:28px; font-size:11px; padding:0 8px;">حذف</button>
+                        </td>
                     </tr>
                 `;
             });
         }
 
         function deleteTrainer(id) {
-            appData.trainers = appData.trainers.filter(t => t.id !== id);
-            saveData();
-            renderTrainers();
-            showToast('تم حذف المدرب فوراً');
+            if (confirm('حذف المدرب؟')) {
+                appData.trainers = appData.trainers.filter(t => t.id !== id);
+                saveData();
+                renderTrainers();
+            }
         }
 
-        // الإيرادات
+        // --- 4. الإيرادات والمصروفات ---
         function addIncome() {
             const source = document.getElementById('incSource').value.trim();
-            const amount = document.getElementById('incAmount').value;
+            const amount = parseFloat(document.getElementById('incAmount').value) || 0;
             const category = document.getElementById('incCategory').value;
-            if(!source || !amount) return showToast('يرجى ملء كافة الحقول', 'error');
-            
-            appData.income.push({ id: Date.now(), source, amount: Number(amount), category, date: new Date().toLocaleDateString() });
-            document.getElementById('incSource').value = '';
-            document.getElementById('incAmount').value = '';
-            
+
+            if (!source || amount <= 0) return alert('أدخل بيانات الوارد بشكل صحيح');
+
+            appData.income.push({
+                id: Date.now().toString(),
+                source, amount, category,
+                date: new Date().toLocaleDateString('ar-EG')
+            });
             saveData();
             renderIncome();
-            showToast('تم تسجيل الوارد وحفظه فوراً');
+            updateDashboard();
+
+            document.getElementById('incSource').value = '';
+            document.getElementById('incAmount').value = '';
+            showToast('تم تسجيل المبلغ في الإيرادات');
         }
 
         function renderIncome() {
             const tbody = document.getElementById('incomeTableBody');
             tbody.innerHTML = '';
-            if(appData.income.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="empty-state">لا توجد سجلات وارد مالية</td></tr>`;
+            if (appData.income.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="empty-state">لا توجد إيرادات مسجلة</td></tr>`;
                 return;
             }
-            appData.income.forEach((i) => {
+            appData.income.forEach(inc => {
                 tbody.innerHTML += `
                     <tr>
-                        <td>${i.date}</td>
-                        <td style="font-weight: 800;">${i.source}</td>
-                        <td>${i.category}</td>
-                        <td style="color: var(--success); font-weight: 800;">${i.amount} ${appData.currency}</td>
-                        <td style="text-align: center;"><button onclick="deleteIncome(${i.id})" class="btn btn-danger" style="padding: 4px 10px; height: auto; font-size: 11px;">حذف</button></td>
+                        <td>${inc.date}</td>
+                        <td>${inc.source}</td>
+                        <td>${inc.category}</td>
+                        <td style="color:var(--success); font-weight:800;">+${inc.amount.toLocaleString()} ${appData.currency}</td>
+                        <td style="text-align: center;">
+                            <button onclick="deleteIncome('${inc.id}')" class="btn btn-danger" style="height:28px; font-size:11px; padding:0 8px;">حذف</button>
+                        </td>
                     </tr>
                 `;
             });
         }
 
         function deleteIncome(id) {
-            appData.income = appData.income.filter(i => i.id !== id);
-            saveData();
-            renderIncome();
-            showToast('تم حذف سجل الوارد فوراً');
+            if (confirm('حذف هذا السند؟')) {
+                appData.income = appData.income.filter(i => i.id !== id);
+                saveData();
+                renderIncome();
+                updateDashboard();
+            }
         }
 
-        // المصروفات
         function addExpense() {
             const target = document.getElementById('expTarget').value.trim();
-            const amount = document.getElementById('expAmount').value;
+            const amount = parseFloat(document.getElementById('expAmount').value) || 0;
             const category = document.getElementById('expCategory').value;
-            if(!target || !amount) return showToast('يرجى ملء كافة الحقول', 'error');
-            
-            appData.expenses.push({ id: Date.now(), target, amount: Number(amount), category, date: new Date().toLocaleDateString() });
-            document.getElementById('expTarget').value = '';
-            document.getElementById('expAmount').value = '';
-            
+
+            if (!target || amount <= 0) return alert('أدخل بيانات المنصرف بشكل صحيح');
+
+            appData.expenses.push({
+                id: Date.now().toString(),
+                target, amount, category,
+                date: new Date().toLocaleDateString('ar-EG')
+            });
             saveData();
             renderExpenses();
-            showToast('تم تسجيل المنصرف فوراً');
+            updateDashboard();
+
+            document.getElementById('expTarget').value = '';
+            document.getElementById('expAmount').value = '';
+            showToast('تم تسجيل المنصرف بنجاح');
         }
 
         function renderExpenses() {
             const tbody = document.getElementById('expensesTableBody');
             tbody.innerHTML = '';
-            if(appData.expenses.length === 0) {
+            if (appData.expenses.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="5" class="empty-state">لا توجد مصروفات مسجلة</td></tr>`;
                 return;
             }
-            appData.expenses.forEach((e) => {
+            appData.expenses.forEach(exp => {
                 tbody.innerHTML += `
                     <tr>
-                        <td>${e.date}</td>
-                        <td style="font-weight: 800;">${e.target}</td>
-                        <td>${e.category}</td>
-                        <td style="color: var(--danger); font-weight: 800;">${e.amount} ${appData.currency}</td>
-                        <td style="text-align: center;"><button onclick="deleteExpense(${e.id})" class="btn btn-danger" style="padding: 4px 10px; height: auto; font-size: 11px;">حذف</button></td>
+                        <td>${exp.date}</td>
+                        <td>${exp.target}</td>
+                        <td>${exp.category}</td>
+                        <td style="color:var(--danger); font-weight:800;">-${exp.amount.toLocaleString()} ${appData.currency}</td>
+                        <td style="text-align: center;">
+                            <button onclick="deleteExpense('${exp.id}')" class="btn btn-danger" style="height:28px; font-size:11px; padding:0 8px;">حذف</button>
+                        </td>
                     </tr>
                 `;
             });
         }
 
         function deleteExpense(id) {
-            appData.expenses = appData.expenses.filter(e => e.id !== id);
-            saveData();
-            renderExpenses();
-            showToast('تم حذف المصروف فوراً');
+            if (confirm('حذف السند؟')) {
+                appData.expenses = appData.expenses.filter(e => e.id !== id);
+                saveData();
+                renderExpenses();
+                updateDashboard();
+            }
         }
 
-        // التسجيل والحسابات
-        function registerStudentToCourse() {
-            const studentId = document.getElementById('admStudentSelect').value;
-            const courseId = document.getElementById('admCourseSelect').value;
-            if(!studentId || !courseId) return showToast('يرجى اختيار الطالب والكورس', 'error');
-            const student = appData.students.find(s => s.id == studentId);
-            const course = appData.courses.find(c => c.id == courseId);
+        // --- 5. الفواتير الرسمية ---
+        function createInvoice() {
+            const client = document.getElementById('invClientName').value.trim();
+            const service = document.getElementById('invService').value.trim();
+            const amount = parseFloat(document.getElementById('invAmount').value) || 0;
 
-            appData.admissions.push({ id: Date.now(), studentName: student.name, courseName: course.name, courseFee: course.fee, paid: 0, date: new Date().toLocaleDateString() });
+            if (!client || amount <= 0) return alert('يرجى ملء بيانات الفاتورة بشكل صحيح');
+
+            const inv = {
+                id: 'INV-' + Math.floor(1000 + Math.random() * 9000),
+                client, service, amount,
+                date: new Date().toLocaleDateString('ar-EG')
+            };
+
+            appData.invoices.push(inv);
+            saveData();
+            renderInvoices();
+
+            document.getElementById('invClientName').value = '';
+            document.getElementById('invService').value = '';
+            document.getElementById('invAmount').value = '';
+
+            previewInvoiceModal(inv);
+        }
+
+        function renderInvoices() {
+            const tbody = document.getElementById('invoicesTableBody');
+            tbody.innerHTML = '';
+            if (appData.invoices.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="empty-state">لا توجد فواتير صاردة</td></tr>`;
+                return;
+            }
+            appData.invoices.forEach(inv => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${inv.id}</strong></td>
+                        <td>${inv.date}</td>
+                        <td>${inv.client}</td>
+                        <td>${inv.service}</td>
+                        <td>${inv.amount.toLocaleString()} ${appData.currency}</td>
+                        <td style="text-align: center;">
+                            <button onclick='previewInvoiceModal(${JSON.stringify(inv)})' class="btn btn-secondary" style="height:28px; font-size:11px; padding:0 8px;">عرض وطباعة</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function previewInvoiceModal(inv) {
+            const modal = document.getElementById('previewModal');
+            const box = document.getElementById('modalBoxContent');
+
+            box.innerHTML = `
+                <div style="text-align:center; border-bottom:2px solid #e2e8f0; padding-bottom:15px; margin-bottom:20px;">
+                    <h2 style="color:#2563eb; font-weight:900;">معهد الأنوار للتدريب واللغات</h2>
+                    <p style="font-size:12px; color:#64748b;">سند قبض / فاتورة رسمية معتمدة</p>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:15px;">
+                    <div><strong>رقم الفاتورة:</strong> ${inv.id}</div>
+                    <div><strong>التاريخ:</strong> ${inv.date}</div>
+                </div>
+                <div style="background:#f8fafc; padding:15px; border-radius:12px; margin-bottom:20px; font-size:13px; line-height:1.8;">
+                    <div><strong>استلمنا من السيد/ة:</strong> ${inv.client}</div>
+                    <div><strong>مبلغ وقدره:</strong> ${inv.amount.toLocaleString()} ${appData.currency}</div>
+                    <div><strong>وذلك مقابل:</strong> ${inv.service}</div>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-top:30px; font-size:12px; font-weight:700;">
+                    <div>التوقيع والختم: ....................</div>
+                    <div>المحاسب المسؤول: admin</div>
+                </div>
+                <div style="margin-top:30px; display:flex; gap:10px; justify-content:center;">
+                    <button onclick="window.print()" class="btn">طباعة الفاتورة 🖨️</button>
+                    <button onclick="closeModal()" class="btn btn-secondary">إغلاق</button>
+                </div>
+            `;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('previewModal').style.display = 'none';
+        }
+
+        // --- 6. التسجيل والقبول والأقساط ---
+        function addAdmission() {
+            const stdId = document.getElementById('admStudentSelect').value;
+            const crsId = document.getElementById('admCourseSelect').value;
+            const paid = parseFloat(document.getElementById('admPaidAmount').value) || 0;
+
+            const std = appData.students.find(s => s.id === stdId);
+            const crs = appData.courses.find(c => c.id === crsId);
+
+            if (!std || !crs) return alert('اختر الطالب والكورس أولاً');
+
+            const remaining = crs.fee - paid;
+
+            appData.admissions.push({
+                id: Date.now().toString(),
+                studentName: std.name,
+                courseName: crs.name,
+                courseFee: crs.fee,
+                paid: paid,
+                remaining: remaining < 0 ? 0 : remaining,
+                date: new Date().toLocaleDateString('ar-EG')
+            });
+
+            if (paid > 0) {
+                appData.income.push({
+                    id: Date.now().toString(),
+                    source: `تسجيل طالب: ${std.name}`,
+                    amount: paid,
+                    category: 'رسوم كورسات',
+                    date: new Date().toLocaleDateString('ar-EG')
+                });
+            }
+
             saveData();
             renderAdmissions();
             renderAccounts();
-            showToast('تم تسجيل الطالب فوراً');
+            renderIncome();
+            updateDashboard();
+
+            document.getElementById('admPaidAmount').value = '';
+            showToast('تم تسجيل الطالب في الكورس بنجاح');
         }
 
         function renderAdmissions() {
-            const tbody = document.getElementById('admissionTableBody');
+            const tbody = document.getElementById('admissionsTableBody');
             tbody.innerHTML = '';
-            if(appData.admissions.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="empty-state">لا توجد تسجيلات نشطة للكورسات</td></tr>`;
+            if (appData.admissions.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="empty-state">لا يوجد تسجيلات حتي الآن</td></tr>`;
                 return;
             }
-            appData.admissions.forEach((a) => {
+            appData.admissions.forEach(adm => {
                 tbody.innerHTML += `
                     <tr>
-                        <td style="font-weight: 800;">${a.studentName}</td>
-                        <td>${a.courseName}</td>
-                        <td>${a.date}</td>
-                        <td style="text-align: center;"><button onclick="deleteAdmission(${a.id})" class="btn btn-danger" style="padding: 4px 10px; height: auto; font-size: 11px;">إلغاء</button></td>
+                        <td>${adm.date}</td>
+                        <td>${adm.studentName}</td>
+                        <td>${adm.courseName}</td>
+                        <td>${adm.courseFee.toLocaleString()} ${appData.currency}</td>
+                        <td style="color:var(--success); font-weight:700;">${adm.paid.toLocaleString()}</td>
+                        <td style="color:${adm.remaining > 0 ? 'var(--danger)' : 'var(--success)'}; font-weight:700;">${adm.remaining.toLocaleString()}</td>
+                        <td style="text-align: center;">
+                            <button onclick="deleteAdmission('${adm.id}')" class="btn btn-danger" style="height:28px; font-size:11px; padding:0 8px;">إلغاء</button>
+                        </td>
                     </tr>
                 `;
             });
         }
 
         function deleteAdmission(id) {
-            appData.admissions = appData.admissions.filter(a => a.id !== id);
-            saveData();
-            renderAdmissions();
-            renderAccounts();
-            showToast('تم إلغاء التسجيل فوراً');
+            if (confirm('حذف القبول؟')) {
+                appData.admissions = appData.admissions.filter(a => a.id !== id);
+                saveData();
+                renderAdmissions();
+                renderAccounts();
+            }
         }
 
         function renderAccounts() {
             const tbody = document.getElementById('accountsTableBody');
             tbody.innerHTML = '';
-            if(appData.admissions.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="empty-state">لا توجد حسابات أو أقساط مسجلة</td></tr>`;
+            if (appData.admissions.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="empty-state">لا توجد حسابات مسجلة</td></tr>`;
                 return;
             }
-            appData.admissions.forEach((a) => {
-                let remaining = a.courseFee - a.paid;
+            appData.admissions.forEach(adm => {
                 tbody.innerHTML += `
                     <tr>
-                        <td style="font-weight: 800;">${a.studentName}</td>
-                        <td>${a.courseName}</td>
-                        <td>${a.courseFee} ${appData.currency}</td>
-                        <td style="color: var(--success); font-weight: 800;">${a.paid} ${appData.currency}</td>
-                        <td style="color: ${remaining > 0 ? 'var(--danger)' : 'var(--success)'}; font-weight: 800;">${remaining} ${appData.currency}</td>
-                        <td style="text-align: center;"><button onclick="payInstallment(${a.id})" class="btn btn-success" style="padding: 4px 10px; height: auto; font-size: 11px;">تسجيل دفعة</button></td>
+                        <td>${adm.studentName}</td>
+                        <td>${adm.courseName}</td>
+                        <td>${adm.courseFee.toLocaleString()} ${appData.currency}</td>
+                        <td>${adm.paid.toLocaleString()}</td>
+                        <td style="color:${adm.remaining > 0 ? 'var(--danger)' : 'var(--success)'}; font-weight:800;">${adm.remaining.toLocaleString()}</td>
+                        <td style="text-align: center;">
+                            ${adm.remaining > 0 ? `<button onclick="payInstallment('${adm.id}')" class="btn btn-success" style="height:28px; font-size:11px; padding:0 8px;">تحصيل قسط</button>` : '<span style="color:var(--success); font-size:11px; font-weight:800;">خالص ✨</span>'}
+                        </td>
                     </tr>
                 `;
             });
         }
 
-        async function payInstallment(id) {
-            let admission = appData.admissions.find(a => a.id === id);
-            let amount = await customPrompt('تسجيل دفعة نقدية', `أدخل المبلغ المسدد (إجمالي الرسوم: ${admission.courseFee}, المدفوع سابقاً: ${admission.paid}):`);
-            if(amount && !isNaN(amount)) {
-                let val = Number(amount);
-                admission.paid += val;
-                appData.income.push({ id: Date.now(), source: admission.studentName + ' (' + admission.courseName + ')', amount: val, category: 'رسوم كورسات', date: new Date().toLocaleDateString() });
+        function payInstallment(admId) {
+            const amount = parseFloat(prompt('أدخل قيمة القسط المحصّل:'));
+            if (!amount || amount <= 0) return;
+
+            const adm = appData.admissions.find(a => a.id === admId);
+            if (adm) {
+                adm.paid += amount;
+                adm.remaining = adm.courseFee - adm.paid;
+                if (adm.remaining < 0) adm.remaining = 0;
+
+                appData.income.push({
+                    id: Date.now().toString(),
+                    source: `قسط طالب: ${adm.studentName}`,
+                    amount: amount,
+                    category: 'رسوم كورسات',
+                    date: new Date().toLocaleDateString('ar-EG')
+                });
+
                 saveData();
+                renderAdmissions();
                 renderAccounts();
                 renderIncome();
-                showToast('تم تسجيل الدفعة وإضافة الإيراد فوراً');
+                updateDashboard();
+                showToast('تم تحصيل القسط وتسجيله في الإيرادات');
             }
         }
 
-        // الحضور والغياب
+        // --- 7. الحضور والغياب ---
         function addAttendance() {
-            const studentId = document.getElementById('attStudentSelect').value;
-            const courseId = document.getElementById('attCourseSelect').value;
+            const stdId = document.getElementById('attStudentSelect').value;
+            const crsId = document.getElementById('attCourseSelect').value;
             const status = document.getElementById('attStatus').value;
-            const student = appData.students.find(s => s.id == studentId);
-            const course = appData.courses.find(c => c.id == courseId);
-            if(!student || !course) return showToast('يرجى اختيار الطالب والكورس', 'error');
 
-            appData.attendance.push({ id: Date.now(), studentName: student.name, courseName: course.name, status, date: new Date().toLocaleDateString() });
+            const std = appData.students.find(s => s.id === stdId);
+            const crs = appData.courses.find(c => c.id === crsId);
+
+            if (!std || !crs) return alert('اختر الطالب والكورس');
+
+            appData.attendance.push({
+                id: Date.now().toString(),
+                studentName: std.name,
+                courseName: crs.name,
+                status: status,
+                date: new Date().toLocaleDateString('ar-EG')
+            });
             saveData();
             renderAttendance();
-            showToast('تم حفظ سجل الحضور فوراً');
+            showToast('تم رصد الحضور');
         }
 
         function renderAttendance() {
             const tbody = document.getElementById('attendanceTableBody');
             tbody.innerHTML = '';
-            if(appData.attendance.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="empty-state">لا توجد سجلات حضور مسجلة</td></tr>`;
+            if (appData.attendance.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="empty-state">لا يوجد كشف حضور اليوم</td></tr>`;
                 return;
             }
-            appData.attendance.forEach((att) => {
-                let statusColor = att.status === 'حاضر' ? 'var(--success)' : (att.status === 'غائب' ? 'var(--danger)' : 'var(--primary)');
+            appData.attendance.forEach(att => {
                 tbody.innerHTML += `
                     <tr>
                         <td>${att.date}</td>
-                        <td style="font-weight: 800;">${att.studentName}</td>
+                        <td>${att.studentName}</td>
                         <td>${att.courseName}</td>
-                        <td style="color: ${statusColor}; font-weight: 800;">${att.status}</td>
-                        <td style="text-align: center;"><button onclick="deleteAttendance(${att.id})" class="btn btn-danger" style="padding: 4px 10px; height: auto; font-size: 11px;">حذف</button></td>
+                        <td><strong>${att.status}</strong></td>
+                        <td style="text-align: center;">
+                            <button onclick="deleteAttendance('${att.id}')" class="btn btn-danger" style="height:28px; font-size:11px; padding:0 8px;">حذف</button>
+                        </td>
                     </tr>
                 `;
             });
@@ -1528,106 +1641,152 @@
             appData.attendance = appData.attendance.filter(a => a.id !== id);
             saveData();
             renderAttendance();
-            showToast('تم حذف سجل الحضور فوراً');
         }
 
-        // الفواتير
-        function createInvoice() {
-            const clientName = document.getElementById('invClientName').value.trim();
-            const service = document.getElementById('invService').value.trim();
-            const amount = document.getElementById('invAmount').value;
-            if(!clientName || !service || !amount) return showToast('يرجى ملء كافة تفاصيل الفاتورة', 'error');
+        // --- 8. الشهادات والدوال التفاعلية ---
+        function addCertificate() {
+            const stdId = document.getElementById('certStudentSelect').value;
+            const crsId = document.getElementById('certCourseSelect').value;
+            const grade = document.getElementById('certGrade').value.trim() || 'ممتاز';
 
-            const invNo = 'INV-' + Math.floor(1000 + Math.random() * 9000);
-            const date = new Date().toLocaleDateString();
-            const inv = { id: Date.now(), invNo, clientName, service, amount: Number(amount), date };
-            
-            appData.invoices.push(inv);
+            const std = appData.students.find(s => s.id === stdId);
+            const crs = appData.courses.find(c => c.id === crsId);
+
+            if (!std || !crs) return alert('اختر الطالب والكورس المكتمل');
+
+            const cert = {
+                id: 'CERT-' + Math.floor(10000 + Math.random() * 90000),
+                studentName: std.name,
+                studentSerial: std.serial || 'ANW-2026-0001',
+                studentLevel: std.level || 'مبتدئ',
+                courseName: crs.name,
+                grade: grade,
+                date: new Date().toLocaleDateString('ar-EG')
+            };
+
+            appData.certificates.push(cert);
             saveData();
-            renderInvoices();
-            showInvoiceModal(inv);
-            showToast('تم إصدار الفاتورة وحفظها فوراً');
+            renderCertificates();
+            showToast('تم إصدار الشهادة بنجاح');
         }
 
-        function renderInvoices() {
-            const tbody = document.getElementById('invoicesTableBody');
+        function renderCertificates() {
+            const tbody = document.getElementById('certificatesTableBody');
             tbody.innerHTML = '';
-            if(appData.invoices.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="empty-state">لا توجد فواتير صادرة حالياً</td></tr>`;
+            if (appData.certificates.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="empty-state">لا توجد شهادات صادرة</td></tr>`;
                 return;
             }
-            appData.invoices.forEach((inv) => {
+            appData.certificates.forEach(c => {
                 tbody.innerHTML += `
                     <tr>
-                        <td style="font-weight: 800; font-family: monospace;">${inv.invNo}</td>
-                        <td>${inv.date}</td>
-                        <td style="font-weight: 800;">${inv.clientName}</td>
-                        <td>${inv.service}</td>
-                        <td style="font-weight: 800; color: var(--primary);">${inv.amount} ${appData.currency}</td>
-                        <td style="text-align: center;"><button onclick="viewInvoice(${inv.id})" class="btn" style="padding: 4px 10px; height: auto; font-size: 11px;">عرض وطباعة</button></td>
+                        <td><strong>${c.id}</strong></td>
+                        <td>${c.date}</td>
+                        <td>${c.studentName}</td>
+                        <td>${c.courseName}</td>
+                        <td>${c.grade}</td>
+                        <td style="text-align: center;">
+                            <button onclick="generateCertificateImage('${c.studentName}', '${c.studentSerial}', '${c.studentLevel}')" class="btn btn-success" style="height:28px; font-size:11px; padding:0 8px;">طباعة شهادة Canvas 🎓</button>
+                        </td>
                     </tr>
                 `;
             });
         }
 
-        function viewInvoice(id) {
-            let inv = appData.invoices.find(i => i.id === id);
-            if(inv) showInvoiceModal(inv);
+        // توليد ورسم الشهادة ديناميكياً بملف الصورة certificate.png
+        function generateCertificateImage(studentName, studentSerial, studentLevel) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            const img = new Image();
+            img.src = 'certificate.png';
+
+            img.onload = function() {
+                canvas.width = img.naturalWidth || 1200;
+                canvas.height = img.naturalHeight || 800;
+
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#0f172a';
+                ctx.textAlign = 'center';
+
+                // 1. الاسم في المنتصف
+                ctx.font = 'bold 42px Arial';
+                ctx.fillText(studentName, canvas.width / 2, canvas.height / 2 + 10);
+
+                // 2. الرقم التسلسلي
+                ctx.font = 'bold 24px Arial';
+                ctx.textAlign = 'left';
+                ctx.fillText(`Serial: ${studentSerial}`, 100, 120);
+
+                // 3. المستوى
+                ctx.textAlign = 'right';
+                ctx.fillText(`Level: ${studentLevel}`, canvas.width - 100, 120);
+
+                const link = document.createElement('a');
+                link.download = `Certificate-${studentSerial}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            };
+
+            img.onerror = function() {
+                alert('عذراً، لم نتمكن من العثور على صورة الخلفية certificate.png. تأكد من وجود الصورة في مجلد المشروع.');
+            };
         }
 
-        function showInvoiceModal(inv) {
-            document.getElementById('modalInvNo').innerText = inv.invNo;
-            document.getElementById('modalClientName').innerText = inv.clientName;
-            document.getElementById('modalDate').innerText = inv.date;
-            document.getElementById('modalServiceDesc').innerText = inv.service;
-            document.getElementById('modalServiceAmount').innerText = inv.amount + ' ' + appData.currency;
-            document.getElementById('modalTotal').innerText = inv.amount + ' ' + appData.currency;
-            document.getElementById('invoiceModal').style.display = 'flex';
+        // --- 9. التقارير الشاملة وتحديث اللوحة ---
+        function generateReport(type) {
+            const container = document.getElementById('reportResultContainer');
+            const totalInc = appData.income.reduce((a, b) => a + b.amount, 0);
+            const totalExp = appData.expenses.reduce((a, b) => a + b.amount, 0);
+            const net = totalInc - totalExp;
+
+            container.innerHTML = `
+                <div style="font-size:14px; font-weight:800; margin-bottom:15px; color:var(--primary);">
+                    ملخص التقرير (${type === 'daily' ? 'اليومي' : (type === 'monthly' ? 'الشهري' : 'الشامل')}):
+                </div>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:15px; margin-bottom:15px;">
+                    <div style="background:var(--card-bg); padding:15px; border-radius:12px; border:1px solid var(--border);">
+                        <span style="font-size:11px; color:var(--text-muted);">إجمالي الإيرادات</span>
+                        <h4 style="color:var(--success); font-size:18px;">${totalInc.toLocaleString()} ${appData.currency}</h4>
+                    </div>
+                    <div style="background:var(--card-bg); padding:15px; border-radius:12px; border:1px solid var(--border);">
+                        <span style="font-size:11px; color:var(--text-muted);">إجمالي المصروفات</span>
+                        <h4 style="color:var(--danger); font-size:18px;">${totalExp.toLocaleString()} ${appData.currency}</h4>
+                    </div>
+                    <div style="background:var(--card-bg); padding:15px; border-radius:12px; border:1px solid var(--border);">
+                        <span style="font-size:11px; color:var(--text-muted);">صافي الأرباح/الخزنة</span>
+                        <h4 style="color:${net >= 0 ? 'var(--primary)' : 'var(--danger)'}; font-size:18px;">${net.toLocaleString()} ${appData.currency}</h4>
+                    </div>
+                </div>
+                <p style="font-size:12px; color:var(--text-muted);">إجمالي الطلاب المسجلين بالمنظومة: ${appData.students.length} طالب.</p>
+            `;
         }
 
-        function closeInvoiceModal() {
-            document.getElementById('invoiceModal').style.display = 'none';
+        function updateDashboard() {
+            const totalStudents = appData.students ? appData.students.length : 0;
+            const totalIncome = appData.income ? appData.income.reduce((sum, item) => sum + item.amount, 0) : 0;
+            const totalExpense = appData.expenses ? appData.expenses.reduce((sum, item) => sum + item.amount, 0) : 0;
+            const balance = totalIncome - totalExpense;
+
+            if (document.getElementById('dashTotalStudents')) document.getElementById('dashTotalStudents').innerText = totalStudents;
+            if (document.getElementById('dashTotalIncome')) document.getElementById('dashTotalIncome').innerText = `${totalIncome.toLocaleString()} ${appData.currency}`;
+            if (document.getElementById('dashTotalExpense')) document.getElementById('dashTotalExpense').innerText = `${totalExpense.toLocaleString()} ${appData.currency}`;
+            if (document.getElementById('dashBalance')) document.getElementById('dashBalance').innerText = `${balance.toLocaleString()} ${appData.currency}`;
         }
 
-        function downloadInvoicePDF() {
-            html2pdf().from(document.getElementById('invoicePrintArea')).save('Anwar-Invoice.pdf');
-            showToast('جاري تصدير الفاتورة PDF...');
-        }
-
-        // الشهادات
-        function generateCertificate() {
-            const studentId = document.getElementById('certStudentSelect').value;
-            const courseId = document.getElementById('certCourseSelect').value;
-            const student = appData.students.find(s => s.id == studentId);
-            const course = appData.courses.find(c => c.id == courseId);
-            if(!student || !course) return showToast('يرجى اختيار الطالب والكورس', 'error');
-
-            document.getElementById('certStudentNameDisplay').innerText = student.name;
-            document.getElementById('certCourseNameDisplay').innerText = course.name;
-            document.getElementById('certDateDisplay').innerText = new Date().toLocaleDateString();
-            document.getElementById('certCodeDisplay').innerText = 'ANW-' + new Date().getFullYear() + '-' + Math.floor(100 + Math.random() * 900);
-            document.getElementById('certificateContainer').style.display = 'block';
-            showToast('تم توليد الشهادة بنجاح');
-        }
-
-        function printCertificatePDF() {
-            html2pdf().from(document.getElementById('printableCert')).save('Anwar-Certificate.pdf');
-            showToast('جاري تصدير الشهادة PDF...');
-        }
-
-        // تحديث القوائم المنسدلة
         function updateSelects() {
             ['admStudentSelect', 'attStudentSelect', 'certStudentSelect'].forEach(id => {
                 const el = document.getElementById(id);
-                if(el) {
+                if (el) {
                     el.innerHTML = '<option value="">اختر الطالب...</option>';
-                    appData.students.forEach(s => el.innerHTML += `<option value="${s.id}">${s.name}</option>`);
+                    appData.students.forEach(s => el.innerHTML += `<option value="${s.id}">${s.name} (${s.serial || ''})</option>`);
                 }
             });
 
             ['admCourseSelect', 'attCourseSelect', 'certCourseSelect'].forEach(id => {
                 const el = document.getElementById(id);
-                if(el) {
+                if (el) {
                     el.innerHTML = '<option value="">اختر الكورس...</option>';
                     appData.courses.forEach(c => el.innerHTML += `<option value="${c.id}">${c.name}</option>`);
                 }
@@ -1640,28 +1799,21 @@
             renderTrainers();
             renderIncome();
             renderExpenses();
+            renderInvoices();
             renderAdmissions();
             renderAccounts();
             renderAttendance();
-            renderInvoices();
-            updateDashboard();
+            renderCertificates();
         }
-        
-    </script>
-<script>
+
+        // تسجيل الـ Service Worker ليعمل التطبيق بدون إنترنت PWA
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load' () => {
-                   navigator.serviceWorker.register('./sw.js')
-                .then((reg) => console.log('service Woeker registered successfully!' ,reg))
-            .catch((err) => console.log('service Worker registration failed:',err));
-            
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('Service Worker registered successfully!', reg))
+                .catch(err => console.log('Service Worker registration failed:', err));
             });
         }
-    function generateStudentSerial(){
-                                let students = JSON.parse(localStorage.getItem('students') || '[]');
-                                let count = students.length +1;
-                                let serialNumber = String(count).padStart(4, '0');
-                                return  `ANW-2026-${serialNumber}`;
-            </script>
+    </script>
 </body>
 </html>
