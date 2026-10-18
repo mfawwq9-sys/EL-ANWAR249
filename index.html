@@ -1643,32 +1643,58 @@
             renderAttendance();
         }
 
-        // --- 8. الشهادات والدوال التفاعلية ---
-        function addCertificate() {
-            const stdId = document.getElementById('certStudentSelect').value;
-            const crsId = document.getElementById('certCourseSelect').value;
-            const grade = document.getElementById('certGrade').value.trim() || 'ممتاز';
+      // دالة رسم الشهادة المعدلة بالكامل باللغة الإنجليزية ومحاذاة مضبوطة 100%
+function generateCertificateImage(studentName, studentSerial, studentLevel) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
 
-            const std = appData.students.find(s => s.id === stdId);
-            const crs = appData.courses.find(c => c.id === crsId);
+    const img = new Image();
+    img.src = 'certificate.png';
 
-            if (!std || !crs) return alert('اختر الطالب والكورس المكتمل');
+    img.onload = function() {
+        canvas.width = img.naturalWidth || 1920;
+        canvas.height = img.naturalHeight || 1080;
 
-            const cert = {
-                id: 'CERT-' + Math.floor(10000 + Math.random() * 90000),
-                studentName: std.name,
-                studentSerial: std.serial || 'ANW-2026-0001',
-                studentLevel: std.level || 'مبتدئ',
-                courseName: crs.name,
-                grade: grade,
-                date: new Date().toLocaleDateString('ar-EG')
+        // 1. رسم خلفية الشهادة
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // تنظيف قيمة المستوى لتكون بالإنجليزية فقط (إزالة النص العربي بين القوسين إن وجد)
+        let englishLevel = studentLevel || 'Beginner';
+        if (englishLevel.includes('(')) {
+            englishLevel = englishLevel.split('(')[0].trim();
+        }
+
+        // إعداد ألوان ونصوص خطوط الشهادة
+        ctx.fillStyle = '#1e293b';
+
+        // 2. كتابة الرقم التسلسلي (جهة اليسار في إطار أبيض/فارغ مخصص)
+        ctx.font = 'bold 22px Arial';
+        ctx.textAlign = 'left';
+        ctx.fillText(`Serial No: ${studentSerial}`, canvas.width * 0.12, canvas.height * 0.18);
+
+        // 3. كتابة المستوى بالإنجليزية فقط (جهة اليمين)
+        ctx.font = 'bold 22px Arial';
+        ctx.textAlign = 'right';
+        ctx.fillText(`Level: ${englishLevel}`, canvas.width * 0.88, canvas.height * 0.18);
+
+        // 4. كتابة اسم الطالب في منتصف البرواز المخصص له بالتمام
+        ctx.font = 'bold 38px "Times New Roman", Georgia, serif';
+        ctx.textAlign = 'center';
+        // رفع موضع الاسم قليلاً ليستقر داخل الصندوق الإهليجي/الذهبي
+        ctx.fillText(studentName, canvas.width / 2, canvas.height * 0.515);
+
+        // 5. تنزيل الصورة الناتجة
+        const link = document.createElement('a');
+        link.download = `Certificate-${studentSerial}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
             };
 
-            appData.certificates.push(cert);
-            saveData();
-            renderCertificates();
-            showToast('تم إصدار الشهادة بنجاح');
-        }
+    img.onerror = function() {
+        alert('عذراً، لم نتمكن من العثور على صورة الخلفية certificate.png في مجلد المشروع.');
+    };
+}
+
 
         function renderCertificates() {
             const tbody = document.getElementById('certificatesTableBody');
