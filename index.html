@@ -1642,9 +1642,8 @@
             saveData();
             renderAttendance();
         }
-
-   // دالة رسم الشهادة المتناسقة تماماً مع قالب الشهادة (certificate.png)
-function generateCertificateImage(studentName, studentSerial, studentLevel, courseName = 'Professional Training Course', duration = '3 Months', date = '') {
+// دالة رسم الشهادة المتناسقة تماماً مع قالب الشهادة (certificate.png)
+function generateCertificateImage(studentName, studentSerial, studentLevel, courseName = 'English Language Course', duration = '3 Months', date = '') {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
 
@@ -1652,43 +1651,63 @@ function generateCertificateImage(studentName, studentSerial, studentLevel, cour
     img.src = 'certificate.png';
 
     img.onload = function() {
-        // مطابقة أبعاد الصورة الأصلية للشهادة بدقة
+        // مطابقة أبعاد الصورة الأصلية للشهادة بدقة عالية
         canvas.width = img.naturalWidth || 1920;
         canvas.height = img.naturalHeight || 1080;
 
-        // 1. رسم خلفية الشهادة
+        // 1. رسم خلفية الشهادة الأصلية
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        // 2. كتابة اسم الطالب (في منتصف الصندوق الذهبي المزخرف)
-        ctx.fillStyle = '#0f172a';
-        ctx.font = 'bold 42px "Times New Roman", Georgia, serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(studentName, canvas.width / 2, canvas.height * 0.525);
+        // تنظيف وتجهيز النصوص بالإنجليزية
+        let englishLevel = studentLevel || 'Beginner';
+        if (englishLevel.includes('(')) {
+            englishLevel = englishLevel.split('(')[0].trim();
+        }
+        let fullCourseTitle = `${courseName} - ${englishLevel}`;
 
-        // 3. كتابة اسم الكورس (في الفراغ المخصص أسفل عبارة has successfully completed)
+        // 2. كتابة اسم الطالب (في منتصف الصندوق الذهبي المزخرف بدقة)
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 48px "Times New Roman", Georgia, serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(studentName, canvas.width / 2, canvas.height * 0.52);
+
+        // 3. كتابة اسم الكورس والمستوى (في الفراغ المخصص تحت has successfully completed)
         ctx.font = 'bold 26px Arial';
         ctx.fillStyle = '#1d4ed8';
-        ctx.fillText(courseName, canvas.width / 2, canvas.height * 0.445);
+        ctx.fillText(fullCourseTitle, canvas.width / 2, canvas.height * 0.445);
+
+        // إعادة ضبط baseline للنصوص العادية
+        ctx.textBaseline = 'alphabetic';
 
         // 4. كتابة مدة الكورس (على السطر المخصص بجانب Course Duration)
-        ctx.font = '20px Arial';
+        ctx.font = 'bold 20px Arial';
         ctx.fillStyle = '#0f172a';
         ctx.textAlign = 'center';
-        ctx.fillText(duration, canvas.width * 0.32, canvas.height * 0.678);
+        ctx.fillText(duration, canvas.width * 0.35, canvas.height * 0.678);
 
         // 5. كتابة تاريخ الإنجاز (على السطر المخصص بجانب Date of Completion)
         ctx.fillText(date || new Date().toLocaleDateString('en-US'), canvas.width * 0.68, canvas.height * 0.678);
 
-        // 6. كتابة رقم الشهادة / الرقم التسلسلي (على السطر المخصص فوق الختم بجانب Certificate No.)
-        ctx.font = 'bold 20px Arial';
-        ctx.fillText(studentSerial || 'ANW-2026-0001', canvas.width * 0.5, canvas.height * 0.720);
+        // 6. كتابة الرقم التسلسلي (على السطر المخصص بجانب Certificate No. فوق الختم تماماً)
+        ctx.font = 'bold 22px Arial';
+        ctx.fillStyle = '#1d4ed8';
+        ctx.fillText(studentSerial || 'ANW-2026-0001', canvas.width * 0.56, canvas.height * 0.722);
 
-        // 7. تنزيل الصورة الناتجة بجودة عالية
+        // 7. تنزيل الصورة الناتجة بجودة فائقة
         const link = document.createElement('a');
         link.download = `Certificate-${studentSerial || 'ANW'}.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
     };
+
+    img.onerror = function() {
+        alert('عذراً، لم نتمكن من تحميل صورة الخلفية certificate.png. تأكد من وجودها في مجلد المشروع على GitHub.');
+    };
+}
+        
+
+        
 
     img.onerror = function() {
         alert('عذراً، لم نتمكن من العثور على صورة الخلفية certificate.png في مجلد المشروع.');
