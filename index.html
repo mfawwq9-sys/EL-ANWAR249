@@ -1948,6 +1948,33 @@ function downloadManualCertificate() {
 function closeModal() {
     document.getElementById('previewModal').style.display = 'none';
 }
+        function addCertificate() {
+    const stdId = document.getElementById('certStudentSelect').value;
+    const crsId = document.getElementById('certCourseSelect').value;
+    const grade = document.getElementById('certGrade').value.trim();
+    const std = appData.students.find(s => s.id === stdId);
+    const crs = appData.courses.find(c => c.id === crsId);
+    
+    if (!std || !crs) return alert('الرجاء اختيار الطالب والكورس أولاً');
+
+    const cert = {
+        id: 'CERT-' + Math.floor(1000 + Math.random() * 9000),
+        studentName: std.name,
+        studentSerial: std.serial || 'ANW-2026-0001',
+        studentLevel: std.level || 'Beginner',
+        courseName: crs.name,
+        grade: grade || 'ممتاز',
+        date: new Date().toLocaleDateString('ar-EG')
+    };
+
+    appData.certificates.push(cert);
+    saveData();
+    renderCertificates();
+    showToast('تم إصدار الشهادة بنجاح');
+    
+    // فتح نافذة المعاينة والضبط اليدوي فوراً
+    generateCertificateImage(cert.studentName, cert.studentSerial, cert.studentLevel, cert.courseName, crs.duration || '3 Months', cert.date);
+}
     </script>
 </body>
 </html>
