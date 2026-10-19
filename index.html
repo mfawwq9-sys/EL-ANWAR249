@@ -1008,9 +1008,58 @@
         </div>
     </div>
 
-    <!-- النافذة المنبثقة للفواتير والشهادات -->
-    <div id="previewModal" class="modal-overlay">
-        <div class="modal-box" id="modalBoxContent"></div>
+  <div id="previewModal" class="modal-overlay">
+    <div class="modal-box" id="modalBoxContent"></div>
+</div>
+    <!-- نافذة تعديل ومعاينة الشهادة يدوياً -->
+    <div id="previewModal" class="modal-overlay" style="display:none;">
+        <div class="modal-box" style="max-width: 800px; text-align: right;">
+            <h3 style="margin-bottom: 15px; color: var(--primary);">تعديل ومعاينة بيانات الشهادة يدوياً 🎓</h3>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                <div class="input-group">
+                    <label>اسم الطالب (باللغة الإنجليزية):</label>
+                    <input type="text" id="manualCertName" placeholder="Ammar Abdul Halim">
+                </div>
+                <div class="input-group">
+                    <label>رقم الشهادة / Serial:</label>
+                    <input type="text" id="manualCertSerial" placeholder="ANW-2026-0001">
+                </div>
+                <div class="input-group">
+                    <label>اسم الكورس / Course:</label>
+                    <input type="text" id="manualCertCourse" placeholder="English Language Course">
+                </div>
+                <div class="input-group">
+                    <label>مستوى الكورس / Level:</label>
+                    <input type="text" id="manualCertLevel" placeholder="Beginner">
+                </div>
+                <div class="input-group">
+                    <label>مدة الكورس / Duration:</label>
+                    <input type="text" id="manualCertDuration" placeholder="3 Months">
+                </div>
+                <div class="input-group">
+                    <label>تاريخ الإنجاز / Date:</label>
+                    <input type="text" id="manualCertDate">
+                </div>
+            </div>
+
+            <!-- أزرار الضبط اليدوي لمكان الاسم -->
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; background: var(--bg-app); padding: 10px; border-radius: 10px;">
+                <span style="font-size: 12px; font-weight: bold;">موضع الاسم عمودياً:</span>
+                <button type="button" onclick="adjustNameY(-10)" class="btn btn-secondary" style="height: 30px; padding: 0 10px;">رفع لأعلى ⬆️</button>
+                <button type="button" onclick="adjustNameY(10)" class="btn btn-secondary" style="height: 30px; padding: 0 10px;">خفض لأسفل ⬇️</button>
+            </div>
+
+            <!-- معاينة الشهادة مباشرة -->
+            <div style="width: 100%; text-align: center; overflow: hidden; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 15px;">
+                <canvas id="certPreviewCanvas" style="width: 100%; height: auto; max-height: 400px;"></canvas>
+            </div>
+
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button onclick="downloadManualCertificate()" class="btn btn-success">تنزيل الشهادة النهائية 📥</button>
+                <button onclick="closeModal()" class="btn btn-danger">إغلاق</button>
+            </div>
+        </div>
     </div>
 <!-- أكواد البرمجة للجافاسكريبت -->
     <script>
@@ -1642,70 +1691,102 @@
             saveData();
             renderAttendance();
         }
-// دالة رسم الشهادة المتناسقة تماماً مع قالب الشهادة (certificate.png)
+
+      // متغيرات التحكم اليدوي
+let nameYOffset = 0.525; // النسبة المئوية لموقع الاسم من ارتفاع الشهادة
+
+// 1. دالة فتح نافذة التعديل اليدوي
 function generateCertificateImage(studentName, studentSerial, studentLevel, courseName = 'English Language Course', duration = '3 Months', date = '') {
-    const canvas = document.createElement('canvas');
+    document.getElementById('manualCertName').value = studentName || '';
+    document.getElementById('manualCertSerial').value = studentSerial || 'ANW-2026-0001';
+    document.getElementById('manualCertCourse').value = courseName || 'English Language Course';
+    document.getElementById('manualCertLevel').value = (studentLevel || 'Beginner').replace(/\(.*?\)/g, '').trim();
+    document.getElementById('manualCertDuration').value = duration || '3 Months';
+    document.getElementById('manualCertDate').value = date || new Date().toLocaleDateString('en-US');
+
+    document.getElementById('previewModal').style.display = 'flex';
+    
+    // إحداثيات افتراضية
+    nameYOffset = 0.525;
+    
+    // ربط الحقول بالمعاينة المباشرة عند الكتابة
+    const inputs = ['manualCertName', 'manualCertSerial', 'manualCertCourse', 'manualCertLevel', 'manualCertDuration', 'manualCertDate'];
+    inputs.forEach(id => {
+        document.getElementById(id).oninput = renderCertToCanvas;
+    });
+
+    renderCertToCanvas();
+}
+
+// 2. دالة تعديل موضع الاسم عمودياً يدوياً
+function adjustNameY(change) {
+    nameYOffset += (change / 1000);
+    renderCertToCanvas();
+}
+
+// 3. دالة الرسم الحية على الـ Canvas للمعاينة
+function renderCertToCanvas() {
+    const canvas = document.getElementById('certPreviewCanvas');
     const ctx = canvas.getContext('2d');
 
     const img = new Image();
     img.src = 'certificate.png';
 
     img.onload = function() {
-        // مطابقة أبعاد الصورة الأصلية للشهادة بدقة عالية
         canvas.width = img.naturalWidth || 1920;
         canvas.height = img.naturalHeight || 1080;
 
-        // 1. رسم خلفية الشهادة الأصلية
+        // 1. رسم الخلفية
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        // تنظيف وتجهيز النصوص بالإنجليزية
-        let englishLevel = studentLevel || 'Beginner';
-        if (englishLevel.includes('(')) {
-            englishLevel = englishLevel.split('(')[0].trim();
-        }
-        let fullCourseTitle = `${courseName} - ${englishLevel}`;
+        // قراءة المدخلات اليدوية
+        const name = document.getElementById('manualCertName').value;
+        const serial = document.getElementById('manualCertSerial').value;
+        const course = document.getElementById('manualCertCourse').value;
+        const level = document.getElementById('manualCertLevel').value;
+        const duration = document.getElementById('manualCertDuration').value;
+        const date = document.getElementById('manualCertDate').value;
 
-        // 2. كتابة اسم الطالب (في منتصف الصندوق الذهبي المزخرف بدقة)
+        // 2. كتابة الاسم يدوياً
         ctx.fillStyle = '#0f172a';
-        ctx.font = 'bold 48px "Times New Roman", Georgia, serif';
+        ctx.font = 'bold 44px "Times New Roman", Georgia, serif';
         ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(studentName, canvas.width / 2, canvas.height * 0.52);
+        ctx.fillText(name, canvas.width / 2, canvas.height * nameYOffset);
 
-        // 3. كتابة اسم الكورس والمستوى (في الفراغ المخصص تحت has successfully completed)
+        // 3. كتابة اسم الكورس والمستوى
         ctx.font = 'bold 26px Arial';
         ctx.fillStyle = '#1d4ed8';
-        ctx.fillText(fullCourseTitle, canvas.width / 2, canvas.height * 0.445);
+        ctx.fillText(`${course} - ${level}`, canvas.width / 2, canvas.height * 0.445);
 
-        // إعادة ضبط baseline للنصوص العادية
-        ctx.textBaseline = 'alphabetic';
-
-        // 4. كتابة مدة الكورس (على السطر المخصص بجانب Course Duration)
+        // 4. المدة
         ctx.font = 'bold 20px Arial';
         ctx.fillStyle = '#0f172a';
-        ctx.textAlign = 'center';
         ctx.fillText(duration, canvas.width * 0.35, canvas.height * 0.678);
 
-        // 5. كتابة تاريخ الإنجاز (على السطر المخصص بجانب Date of Completion)
-        ctx.fillText(date || new Date().toLocaleDateString('en-US'), canvas.width * 0.68, canvas.height * 0.678);
+        // 5. التاريخ
+        ctx.fillText(date, canvas.width * 0.68, canvas.height * 0.678);
 
-        // 6. كتابة الرقم التسلسلي (على السطر المخصص بجانب Certificate No. فوق الختم تماماً)
+        // 6. الرقم التسلسلي (Certificate No)
         ctx.font = 'bold 22px Arial';
         ctx.fillStyle = '#1d4ed8';
-        ctx.fillText(studentSerial || 'ANW-2026-0001', canvas.width * 0.56, canvas.height * 0.722);
-
-        // 7. تنزيل الصورة الناتجة بجودة فائقة
-        const link = document.createElement('a');
-        link.download = `Certificate-${studentSerial || 'ANW'}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-    };
-
-    img.onerror = function() {
-        alert('عذراً، لم نتمكن من تحميل صورة الخلفية certificate.png. تأكد من وجودها في مجلد المشروع على GitHub.');
+        ctx.fillText(serial, canvas.width * 0.56, canvas.height * 0.722);
     };
 }
-        
+
+// 4. دالة تنزيل الصورة النهائية
+function downloadManualCertificate() {
+    const canvas = document.getElementById('certPreviewCanvas');
+    const serial = document.getElementById('manualCertSerial').value || 'ANW';
+    
+    const link = document.createElement('a');
+    link.download = `Certificate-${serial}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+}
+
+function closeModal() {
+    document.getElementById('previewModal').style.display = 'none';
+}
 
         
 
