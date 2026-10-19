@@ -506,6 +506,30 @@
             .certificate-box, .certificate-box *, .modal-box, .modal-box * { visibility: visible; }
             .modal-box, .certificate-box { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; border: none; }
         }
+        /* تنسيق النافذة المنبثقة */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    display: none; /* مخفية افتراضياً */
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-box {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
     </style>
 </head>
 <body>
